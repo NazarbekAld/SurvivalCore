@@ -32,11 +32,11 @@
 
 <div align="center">
   <br />
-  <img href="https://github.com/PowerNukkitX" target="_blank" alt="PoweredNukkitX", src="https://img.shields.io/badge/PowerNukkitX-Fast open source server framework-lightgrey?style=for-the-badge"><a/>
+  <a href="https://github.com/PowerNukkitX" target="_blank"> <img alt="PoweredNukkitX", src="https://img.shields.io/badge/PowerNukkitX-Fast open source server framework-lightgrey?style=for-the-badge"> <a/>
   <br />
-  <img href="https://maven.apache.org/" target="_blank" alt="maven", src="https://img.shields.io/badge/Maven-Dependency manager-yellow?style=for-the-badge">
+  <a href="https://maven.apache.org/" target="_blank"><img alt="maven", src="https://img.shields.io/badge/Maven-Dependency manager-yellow?style=for-the-badge"> </a>
   <br />
-  <img href="https://projectlombok.org/" target="_blank" alt="lombok", src="https://img.shields.io/badge/Lombok-Generating getters, setters, etc.-red?style=for-the-badge">
+  <a href="https://projectlombok.org/" target="_blank"> <img alt="lombok", src="https://img.shields.io/badge/Lombok-Generating getters, setters, etc.-red?style=for-the-badge"> <a/>
 </div>
 
 
