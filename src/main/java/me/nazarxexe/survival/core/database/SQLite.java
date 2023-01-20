@@ -5,6 +5,7 @@ import lombok.Getter;
 import me.nazarxexe.survival.core.Core;
 import me.nazarxexe.survival.core.tools.TerminalComponent;
 import me.nazarxexe.survival.core.tools.TextComponent;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 import java.io.File;
@@ -22,7 +23,7 @@ public class SQLite implements IDatabase {
 
 
 
-    public SQLite(File databaseFile, Core core) {
+    public SQLite(@NotNull File databaseFile, @NotNull Core core) {
         this.databaseFile = databaseFile;
         if (!(databaseFile.exists())) {
             try {

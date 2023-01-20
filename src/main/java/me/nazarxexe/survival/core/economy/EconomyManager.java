@@ -7,6 +7,7 @@ import me.nazarxexe.survival.core.Core;
 import me.nazarxexe.survival.core.tools.TerminalComponent;
 import me.nazarxexe.survival.core.tools.TextComponent;
 import me.nazarxexe.survival.core.tools.tasktype.TaskType;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 import java.sql.PreparedStatement;
@@ -19,21 +20,17 @@ public class EconomyManager {
 
     private final Core core;
 
-    public List<Pocket> getCachedPockets() {
-        return cachedPockets;
-    }
 
-    private final List<Pocket> cachedPockets;
 
-    public EconomyManager(Core core)
+
+    public EconomyManager(@NotNull Core core)
     {
         this.core = core;
-        this.cachedPockets = new ArrayList<>();
         databaseSetup();
     }
 
 
-    public TaskHandler savePocket(Pocket pocket){
+    public TaskHandler savePocket(@NotNull Pocket pocket){
         return core.getServer().getScheduler().scheduleAsyncTask(core, new AsyncTask() {
             @Override
             public void onRun() {
@@ -86,7 +83,7 @@ public class EconomyManager {
     }
 
 
-    public @Nullable CompletableFuture<Pocket> loadPocket(String name, UUID owner){
+    public @Nullable CompletableFuture<Pocket> loadPocket(@NotNull String name, @NotNull UUID owner){
         return core.getDatabase().getConnection().thenApplyAsync(connection -> {
             PreparedStatement pre;
             try {
@@ -116,7 +113,7 @@ public class EconomyManager {
         });
     }
 
-    public TaskHandler pushTransaction(Transaction transaction){
+    public TaskHandler pushTransaction(@NotNull Transaction transaction){
         return core.getServer().getScheduler().scheduleAsyncTask(core, new AsyncTask() {
             @Override
             public void onRun() {
@@ -130,7 +127,7 @@ public class EconomyManager {
             }
         });
     }
-    public TaskHandler pushTransaction(TaskType taskType, Transaction transaction){
+    public TaskHandler pushTransaction(@NotNull TaskType taskType, @NotNull Transaction transaction){
         if (taskType == TaskType.ASYNC)
             return pushTransaction(transaction);
         if (taskType == TaskType.SYNC)
@@ -149,31 +146,6 @@ public class EconomyManager {
         return pushTransaction(transaction);
     }
 
-    public List<Pocket> getPocket(UUID owner){
-        List<Pocket> result = new LinkedList<>();
-        this.cachedPockets.forEach((pocket -> {
-            if (!(pocket.getOwner().equals(owner))) return;
-            result.add(pocket);
-        }));
-        return result;
-    }
-
-    public List<Pocket> getPocket(String name){
-        List<Pocket> result = new LinkedList<>();
-        this.cachedPockets.forEach((pocket -> {
-            if (!(pocket.getName().equals(name))) return;
-            result.add(pocket);
-        }));
-        return result;
-    }
-    public List<Pocket> getPocket(long balance){
-        List<Pocket> result = new LinkedList<>();
-        this.cachedPockets.forEach((pocket -> {
-            if (!(pocket.getBalance() == balance)) return;
-            result.add(pocket);
-        }));
-        return result;
-    }
 
 
     private void databaseSetup(){

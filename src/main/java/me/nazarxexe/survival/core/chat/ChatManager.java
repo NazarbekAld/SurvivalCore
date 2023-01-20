@@ -4,6 +4,7 @@ import cn.nukkit.utils.TextFormat;
 import me.nazarxexe.survival.core.Core;
 import me.nazarxexe.survival.core.tools.TerminalComponent;
 import me.nazarxexe.survival.core.tools.TextComponent;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -21,7 +22,7 @@ public class ChatManager {
         setDefaultExecutable();
     }
 
-    public void send(Message message){ // Send message to everyone
+    public void send(@NotNull Message message){ // Send message to everyone
 
         core.getServer().getOnlinePlayers().forEach(
 
@@ -31,7 +32,7 @@ public class ChatManager {
 
     }
 
-    public void send(List<Player> players, Message message){ // Send to group of players
+    public void send(@NotNull List<Player> players, @NotNull Message message){ // Send to group of players
 
         players.forEach(
                 (player -> send(player, message))
@@ -39,13 +40,11 @@ public class ChatManager {
 
     }
 
-    public void send(Player player, Message message) { // Send to player
+    public void send(@NotNull Player player, @NotNull Message message) { // Send to player
         player.sendMessage(message.getMessage().getText());
     }
 
-    public void setChatExecutable(ChatExecutable executable) {
-        if (executable == null)
-            throw new NullPointerException();
+    public void setChatExecutable(@NotNull ChatExecutable executable) {
         this.executable = executable;
     }
 
