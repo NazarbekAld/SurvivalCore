@@ -22,7 +22,16 @@ public class ChatManager {
         setDefaultExecutable();
     }
 
-    public void send(@NotNull Message message){ // Send message to everyone
+
+    /**
+     *
+     * <h3>SEND TO EVERYONE</h3>
+     * sends message object to everyone.
+     *
+     * @param message {@link me.nazarxexe.survival.core.chat.Message} object.
+     */
+
+    public void send(@NotNull Message message){
 
         core.getServer().getOnlinePlayers().forEach(
 
@@ -32,6 +41,14 @@ public class ChatManager {
 
     }
 
+    /**
+     *
+     * <h3>SEND TO GROUP OF PLAYERS</h3>
+     * sends message object to group of players.
+     *
+     * @param message {@link me.nazarxexe.survival.core.chat.Message} object.
+     * @param players {@link java.util.List} list of players to send.
+     */
     public void send(@NotNull List<Player> players, @NotNull Message message){ // Send to group of players
 
         players.forEach(
@@ -40,14 +57,32 @@ public class ChatManager {
 
     }
 
+
+    /**
+     *
+     * <h3>SEND TO PLAYER</h3>
+     * sends message object to player.
+     *
+     * @param message {@link me.nazarxexe.survival.core.chat.Message} object.
+     * @param player {@link cn.nukkit.Player} to send.
+     */
     public void send(@NotNull Player player, @NotNull Message message) { // Send to player
         player.sendMessage(message.getMessage().getText());
     }
 
+    /**
+     * <h3>EXECUTABLE SETTER</h3>
+     * @param executable Reqired to be not <b>null</b>.
+     */
     public void setChatExecutable(@NotNull ChatExecutable executable) {
         this.executable = executable;
     }
 
+    /**
+     * <h3>EXECUTABLE GETTER</h3>
+     *
+     * @return {@link me.nazarxexe.survival.core.chat.ChatExecutable}
+     */
     public ChatExecutable getExecutable(){
         return this.executable;
     }

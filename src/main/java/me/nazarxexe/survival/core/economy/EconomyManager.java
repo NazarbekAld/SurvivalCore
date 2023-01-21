@@ -30,6 +30,15 @@ public class EconomyManager {
     }
 
 
+    /**
+     * <h3>SAVE POCKET</h3>
+     * Saves pocket to database.
+     *
+     * @exception SQLException saving failure
+     * @param pocket Pocket your want to save on database.
+     * @return {@link cn.nukkit.scheduler.TaskHandler}
+     */
+
     public TaskHandler savePocket(@NotNull Pocket pocket){
         return core.getServer().getScheduler().scheduleAsyncTask(core, new AsyncTask() {
             @Override
@@ -56,6 +65,7 @@ public class EconomyManager {
                             pre.setString(5, pocket.getName());
                             pre.setString(6, pocket.getOwner().toString());
                             pre.executeUpdate();
+                            pre.close();
                             return;
                         }
                         pre.close();
@@ -68,6 +78,7 @@ public class EconomyManager {
                         pre.setString(3, String.join(" ", members));
                         pre.setLong(4, pocket.getBalance());
                         pre.executeUpdate();
+                        pre.close();
                     } catch (SQLException e) {
                         new TerminalComponent(core.getLogger(),
                                 new TextComponent()
@@ -82,7 +93,17 @@ public class EconomyManager {
 
     }
 
-
+    /**
+    * <h3>LOAD POCKET</h3>
+     * Loads pocket from database.
+     * <br />
+     * @param name Name of your pocket
+     * @param owner Owner of pocket.
+     * @exception SQLException loading failure returns <b>null</b>
+     * @return {@link me.nazarxexe.survival.core.economy.Pocket} in {@link java.util.concurrent.CompletableFuture}.
+     * @see <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/CompletableFuture.html">CompletableFuture docs</a>
+    *
+     */
     public @Nullable CompletableFuture<Pocket> loadPocket(@NotNull String name, @NotNull UUID owner){
         return core.getDatabase().getConnection().thenApplyAsync(connection -> {
             PreparedStatement pre;
@@ -91,7 +112,7 @@ public class EconomyManager {
                 pre.setString(1, name);
                 pre.setString(2, owner.toString());
                 ResultSet resultSet = pre.executeQuery();
-
+                pre.close();
                 if (!(resultSet.next())) return null;
                 String[] members = resultSet.getString("members").split(" ");
                 List<UUID> memberUUIDs = new ArrayList<>();
@@ -113,6 +134,14 @@ public class EconomyManager {
         });
     }
 
+
+    /**
+     *
+     * <h3>PUSH TRANSACTION</h3>
+     *
+     * @param transaction {@link me.nazarxexe.survival.core.economy.Transaction} object.
+     * @return {@link cn.nukkit.scheduler.TaskHandler}
+     */
     public TaskHandler pushTransaction(@NotNull Transaction transaction){
         return core.getServer().getScheduler().scheduleAsyncTask(core, new AsyncTask() {
             @Override
@@ -127,6 +156,14 @@ public class EconomyManager {
             }
         });
     }
+
+    /**
+     *
+     * <h3>PUSH TRANSACTION</h3>
+     * @param transaction {@link me.nazarxexe.survival.core.economy.Transaction} object.
+     * @param taskType {@link me.nazarxexe.survival.core.tools.tasktype.TaskType} enum.
+     * @return {@link cn.nukkit.scheduler.TaskHandler}
+     */
     public TaskHandler pushTransaction(@NotNull TaskType taskType, @NotNull Transaction transaction){
         if (taskType == TaskType.ASYNC)
             return pushTransaction(transaction);
@@ -161,10 +198,14 @@ public class EconomyManager {
                                 "`members` TEXT NOT NULL , `balance` BIGINT NOT NULL );"
                         ));
                     } catch (SQLException e) {
-                        core.getLogger().warning(String.join("\n",
-                                "SQLLite execution FAILED. Please contact creator of plugin to fix the issue.",
-                                "Error: " + e
-                        ));
+                        new TerminalComponent(core.getLogger(), new TextComponent()
+                                .combine(TextFormat.RED)
+                                .combine("SQL execution error.")
+                                .add(new TextComponent()
+                                        .combine(TextFormat.RED)
+                                        .combine("" + e))
+
+                        ).warn();
                     }
                 })).join();
             }

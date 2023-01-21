@@ -20,10 +20,11 @@ public class SQLite implements IDatabase {
 
     private final File databaseFile;
     private final Core core;
-
+    private Connection connection;
 
 
     public SQLite(@NotNull File databaseFile, @NotNull Core core) {
+
         this.databaseFile = databaseFile;
         if (!(databaseFile.exists())) {
             try {
@@ -43,11 +44,18 @@ public class SQLite implements IDatabase {
     @Override
     public @Nullable CompletableFuture<Connection> getConnection() {
         return CompletableFuture.supplyAsync(() -> {
+
             try {
-                return DriverManager.getConnection(String.join("",
+
+                if (connection != null && !(connection.isClosed())){
+                    return connection;
+                }
+
+                this.connection = DriverManager.getConnection(String.join("",
                         "jdbc:sqlite:",
                         databaseFile.getAbsolutePath()
                 ));
+                return connection;
             } catch (SQLException e) {
                 new TerminalComponent(core.getLogger(),
                         new TextComponent()
