@@ -5,6 +5,7 @@ import lombok.Getter;
 import me.nazarxexe.survival.core.Core;
 import me.nazarxexe.survival.core.tools.TerminalComponent;
 import me.nazarxexe.survival.core.tools.TextComponent;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 import java.io.File;
@@ -19,10 +20,11 @@ public class SQLite implements IDatabase {
 
     private final File databaseFile;
     private final Core core;
+    private Connection connection;
 
 
+    public SQLite(@NotNull File databaseFile, @NotNull Core core) {
 
-    public SQLite(File databaseFile, Core core) {
         this.databaseFile = databaseFile;
         if (!(databaseFile.exists())) {
             try {
@@ -42,11 +44,18 @@ public class SQLite implements IDatabase {
     @Override
     public @Nullable CompletableFuture<Connection> getConnection() {
         return CompletableFuture.supplyAsync(() -> {
+
             try {
-                return DriverManager.getConnection(String.join("",
+
+                if (connection != null && !(connection.isClosed())){
+                    return connection;
+                }
+
+                this.connection = DriverManager.getConnection(String.join("",
                         "jdbc:sqlite:",
                         databaseFile.getAbsolutePath()
                 ));
+                return connection;
             } catch (SQLException e) {
                 new TerminalComponent(core.getLogger(),
                         new TextComponent()

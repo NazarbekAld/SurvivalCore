@@ -4,6 +4,7 @@ package me.nazarxexe.survival.core.chat;
 import cn.nukkit.Player;
 import lombok.Getter;
 import me.nazarxexe.survival.core.tools.TextComponent;
+import org.jetbrains.annotations.NotNull;
 
 @Getter
 public class Message{
@@ -12,24 +13,24 @@ public class Message{
     final Player sender;
     final long timestamp;
 
-    public Message(Player sender, TextComponent message) {
+    public Message(@NotNull Player sender, @NotNull TextComponent message) {
         this.sender = sender;
         this.timestamp = System.currentTimeMillis();
         this.message = message;
     }
 
-    public Message(String message) {
+    public Message(@NotNull String message) {
         this.sender = null;
         this.timestamp = System.currentTimeMillis();
         this.message = new TextComponent(message);
     }
-    public Message(TextComponent message) {
+    public Message(@NotNull TextComponent message) {
         this.sender = null;
         this.timestamp = System.currentTimeMillis();
         this.message = message;
     }
 
-    public Message(Player sender, String message) {
+    public Message(@NotNull Player sender, @NotNull String message) {
         this.sender = sender;
         this.timestamp = System.currentTimeMillis();
         this.message = new TextComponent(message);
@@ -37,7 +38,7 @@ public class Message{
 
 
 
-    public void setMessage(TextComponent message) {
+    public void setMessage(@NotNull TextComponent message) {
         this.message = message;
     }
 
