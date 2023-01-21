@@ -61,17 +61,24 @@
         </repository>
 
     </repositories>
-    
-     <dependencies>
+
+    <dependencies>
         <dependency>
             <groupId>com.github.NazarbekAld</groupId>
             <artifactId>SurvivalCore</artifactId>
             <version>-e728e7a1b0-1</version>
         </dependency>
     </dependencies>
-
 ```
 
+### API hook
+```java
+    // NOTE: You may add null checks!
+    EconomyManager economyManager = getServer().getServiceManager().getProvider(EconomyManager.class).getProvider(); // Getting economy manager
+    ChatManager chatManager = getServer().getServiceManager().getProvider(ChatManager.class).getProvider(); // Getting chat manager
+```
+    
+    
 ## Authors
 
 * **NazarbekAlda** - *Initial work* - [NazarbekAld](https://github.com/NazarbekAld)
