@@ -46,39 +46,43 @@ public class EconomyManager {
                 core.getDatabase().getConnection().thenAcceptAsync((connection -> {
                     try {
 
-                        PreparedStatement pre;
-
-                        pre = connection.prepareStatement("SELECT * FROM `Pockets` WHERE `name`=? AND `owner`=?;");
+                        PreparedStatement pre = connection.prepareStatement("SELECT * FROM `Pockets` WHERE `name`=? AND `owner`=?;");
                         pre.setString(1, pocket.getName());
                         pre.setString(2, pocket.getOwner().toString());
-                        if (pre.executeQuery().next()){
-                            pre.close();
-                            pre = connection.prepareStatement("UPDATE `Pockets` SET `name`=?,`owner`=?,`members`=?,`balance`=? WHERE `name`=? AND `owner`=?;");
+                        ResultSet exist = pre.executeQuery();
+                        if (exist.next()){
+                            PreparedStatement uppre = connection.prepareStatement("UPDATE `Pockets` SET `name`=?,`owner`=?,`members`=?,`balance`=? WHERE `name`=? AND `owner`=?;");
                             // SET
-                            pre.setString(1, pocket.getName());
-                            pre.setString(2, pocket.getOwner().toString());
-                            List<String> members = new ArrayList<>();
-                            pocket.getAccessMembers().forEach((access) -> members.add(access.toString()));
-                            pre.setString(3, String.join(" ", members));
-                            pre.setLong(4, pocket.getBalance());
+                            uppre.setString(1, pocket.getName());
+                            uppre.setString(2, pocket.getOwner().toString());
+                            if (pocket.getAccessMembers().isEmpty()){
+                                List<String> members = new ArrayList<>();
+                                pocket.getAccessMembers().forEach((access) -> members.add(access.toString()));
+                                uppre.setString(3, String.join(" ", members));
+                            }else {
+                                uppre.setString(3, "");
+                            }
+
+                            uppre.setLong(4, pocket.getBalance());
                             // WHERE
-                            pre.setString(5, pocket.getName());
-                            pre.setString(6, pocket.getOwner().toString());
-                            pre.executeUpdate();
-                            pre.close();
-                            return;
+                            uppre.setString(5, pocket.getName());
+                            uppre.setString(6, pocket.getOwner().toString());
+                            uppre.executeUpdate();
+                        }else{
+                            PreparedStatement inspre = connection.prepareStatement("INSERT INTO `Pockets`(`name`, `owner`, `members`, `balance`) VALUES (?,?,?,?);");
+                            // INSERT INTO
+                            inspre.setString(1, pocket.getName());
+                            inspre.setString(2, pocket.getOwner().toString());
+                            if (pocket.getAccessMembers().isEmpty()){
+                                List<String> members = new ArrayList<>();
+                                pocket.getAccessMembers().forEach((access) -> members.add(access.toString()));
+                                inspre.setString(3, String.join(" ", members));
+                            }else {
+                                inspre.setString(3, "");
+                            }
+                            inspre.setLong(4, pocket.getBalance());
+                            inspre.executeUpdate();
                         }
-                        pre.close();
-                        pre = connection.prepareStatement("INSERT INTO `Pockets`(`name`, `owner`, `members`, `balance`) VALUES (?,?,?,?);");
-                        // INSERT INTO
-                        pre.setString(1, pocket.getName());
-                        pre.setString(2, pocket.getOwner().toString());
-                        List<String> members = new ArrayList<>();
-                        pocket.getAccessMembers().forEach((access) -> members.add(access.toString()));
-                        pre.setString(3, String.join(" ", members));
-                        pre.setLong(4, pocket.getBalance());
-                        pre.executeUpdate();
-                        pre.close();
                     } catch (SQLException e) {
                         new TerminalComponent(core.getLogger(),
                                 new TextComponent()
@@ -112,11 +116,13 @@ public class EconomyManager {
                 pre.setString(1, name);
                 pre.setString(2, owner.toString());
                 ResultSet resultSet = pre.executeQuery();
-                pre.close();
                 if (!(resultSet.next())) return null;
-                String[] members = resultSet.getString("members").split(" ");
                 List<UUID> memberUUIDs = new ArrayList<>();
-                Arrays.stream(members).toList().forEach((member) -> memberUUIDs.add(UUID.fromString(member)));
+                if ( !(resultSet.getString("members").equals(""))){
+                    String[] members = resultSet.getString("members").split(" ");
+                    Arrays.stream(members).toList().forEach((member) -> memberUUIDs.add(UUID.fromString(member)));
+                }
+
                 return new Pocket(resultSet.getString("name"),
                         UUID.fromString(resultSet.getString("owner")),
                         memberUUIDs,
