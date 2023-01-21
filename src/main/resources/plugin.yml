@@ -3,7 +3,7 @@
 name: SurvivalCore
 main: me.nazarxexe.survival.core.Core
 #remember version and api is string, don't write it like this: 1.0.0, or there will be an exception
-version: "0.1"
+version: "0.1.3"
 api: ["1.0.0"]
 load: POSTWORLD
 author: "NazarbekAlda"
