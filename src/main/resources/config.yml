@@ -1,0 +1,7 @@
+SQL: SQLite # can be replaced with MYSQL.
+SQLPROP: # Connection params. NOT WORK WITH SQLITE.
+  url: localhost
+  port: '3306'
+  username: root
+  password: ''
+  database: econ
