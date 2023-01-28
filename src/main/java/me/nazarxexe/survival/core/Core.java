@@ -1,5 +1,6 @@
 package me.nazarxexe.survival.core;
 
+import cn.nukkit.command.CommandSender;
 import cn.nukkit.plugin.PluginBase;
 import cn.nukkit.plugin.service.ServiceManager;
 import cn.nukkit.plugin.service.ServicePriority;
@@ -10,6 +11,8 @@ import cn.nukkit.utils.TextFormat;
 import lombok.Getter;
 import me.nazarxexe.survival.core.chat.ChatEvent;
 import me.nazarxexe.survival.core.chat.ChatManager;
+import me.nazarxexe.survival.core.command.CommandExecutable;
+import me.nazarxexe.survival.core.command.EzCommand;
 import me.nazarxexe.survival.core.database.IDatabase;
 import me.nazarxexe.survival.core.database.MySQL;
 import me.nazarxexe.survival.core.database.SQLite;

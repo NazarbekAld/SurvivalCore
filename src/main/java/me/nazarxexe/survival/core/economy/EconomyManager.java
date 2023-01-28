@@ -183,7 +183,7 @@ public class EconomyManager {
                             savePocket(pocket);
                         });
 
-                    }));
+                    })).join();
                 }
             });
         return pushTransaction(transaction);
