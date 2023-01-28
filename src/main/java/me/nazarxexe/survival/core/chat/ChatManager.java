@@ -1,11 +1,16 @@
 package me.nazarxexe.survival.core.chat;
 import cn.nukkit.Player;
+import cn.nukkit.plugin.PluginLogger;
+import cn.nukkit.scheduler.AsyncTask;
+import cn.nukkit.scheduler.TaskHandler;
 import cn.nukkit.utils.TextFormat;
 import me.nazarxexe.survival.core.Core;
 import me.nazarxexe.survival.core.tools.TerminalComponent;
 import me.nazarxexe.survival.core.tools.TextComponent;
 import org.jetbrains.annotations.NotNull;
 
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
 
 
@@ -20,6 +25,7 @@ public class ChatManager {
 
         // Default chat format
         setDefaultExecutable();
+
     }
 
 
@@ -86,6 +92,8 @@ public class ChatManager {
     public ChatExecutable getExecutable(){
         return this.executable;
     }
+
+
 
     private void setDefaultExecutable() {
         this.setChatExecutable(message -> {
