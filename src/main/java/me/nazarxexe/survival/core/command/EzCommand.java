@@ -33,7 +33,7 @@ public class EzCommand {
      *      String desc = "say Hello"; // command description
      *      String usage = "/hello"; // command usage
      *      String[] alts = { "hi" }; // command aliases
-     *      CommandExecutable execute = new CommandExecutable {
+     *      CommandExecutable executable = new CommandExecutable {
      *          boolean execute(CommandSender sender, String commandLabel, String[] args){
      *              // some code!!
      *          }
@@ -97,6 +97,10 @@ public class EzCommand {
     }
 
     public EzCommand register(Plugin plugin) {
+
+        plugin.getServer().getCommandMap().getCommands().keySet().removeIf(name -> name.equals(name));
+        plugin.getServer().getCommandMap().getCommands().values().removeIf(command -> command.getName().equals(name));
+
 
         plugin.getServer().getCommandMap().register(name, new Command(name, desc, usage, alts) {
             @Override
