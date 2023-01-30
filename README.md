@@ -66,7 +66,7 @@
         <dependency>
             <groupId>com.github.NazarbekAld</groupId>
             <artifactId>SurvivalCore</artifactId>
-            <version>0.1.4</version>
+            <version>0.1.4P</version>
         </dependency>
     </dependencies>
 ```
