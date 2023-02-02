@@ -98,9 +98,7 @@ public class EzCommand {
 
     public EzCommand register(Plugin plugin) {
 
-        plugin.getServer().getCommandMap().getCommands().keySet().removeIf(name -> name.equals(name));
-        plugin.getServer().getCommandMap().getCommands().values().removeIf(command -> command.getName().equals(name));
-
+        removecmd(plugin, this.name);
 
         plugin.getServer().getCommandMap().register(name, new Command(name, desc, usage, alts) {
             @Override
@@ -110,6 +108,11 @@ public class EzCommand {
         });
 
         return this;
+    }
+
+    public void removecmd (Plugin plugin, String name) {
+        plugin.getServer().getCommandMap().getCommands().keySet().removeIf(n -> n.equalsIgnoreCase(name));
+        plugin.getServer().getCommandMap().getCommands().values().removeIf(command -> command.getName().equals(name));
     }
 
 }
