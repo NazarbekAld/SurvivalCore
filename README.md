@@ -17,7 +17,7 @@
     ·
     <a href="https://github.com/NazarbekAld/SurvivalCore/issues">Request Feature</a>
     ·
-    <a href="https://github.com/NazarbekAld/SurvivalEconomy">EconomyAPI example</a>
+    <a href="https://github.com/NazarbekAld/SurvivalEconomy">Economy Plugin</a>
   </p>
 </div>
 
