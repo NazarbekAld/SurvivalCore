@@ -157,6 +157,12 @@ public class Core extends PluginBase {
                 this, // Registry plugin
                 ServicePriority.NORMAL // Priority
         );
+        servicemanager.register(                                     // Direct db connection
+                IDatabase.class,
+                database,
+                this,
+                ServicePriority.NORMAL
+        );
 
         this.getLogger().info("Services are registered.");
 
