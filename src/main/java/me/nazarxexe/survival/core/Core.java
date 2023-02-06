@@ -17,6 +17,7 @@ import me.nazarxexe.survival.core.database.IDatabase;
 import me.nazarxexe.survival.core.database.MySQL;
 import me.nazarxexe.survival.core.database.SQLite;
 import me.nazarxexe.survival.core.economy.EconomyManager;
+import me.nazarxexe.survival.core.network.debug.PlaySoundDebug;
 import me.nazarxexe.survival.core.tools.TerminalComponent;
 import me.nazarxexe.survival.core.tools.TextComponent;
 
@@ -37,6 +38,8 @@ public class Core extends PluginBase {
 
     private Config config;
 
+    private boolean debug = false;
+
 
 
     // INIT plugin
@@ -49,41 +52,7 @@ public class Core extends PluginBase {
         return String.valueOf(object);
     }
 
-    private void databaseCheck(){
-        this.getServer().getScheduler().scheduleAsyncTask(this, new AsyncTask() {
-            @Override
-            public void onRun() {
 
-                database.getConnection().thenAcceptAsync((connection) -> {
-                    ResultSet resultSet = null;
-                    new TerminalComponent(getLogger(), new TextComponent()
-                            .combine(TextFormat.BLUE + "<DATABASE> Testing database connection..."))
-                            .info();
-                    Statement statement = null;
-                    try {
-                        statement = connection.createStatement();
-                        statement.executeUpdate("CREATE TABLE if not exists `test502502` (`test1` INTEGER);");
-                        statement.executeUpdate("INSERT INTO `test502502`(`test1`) VALUES (69420);");
-                        resultSet = statement.executeQuery("SELECT * from `test502502`");
-                        statement.executeUpdate("DROP TABLE `test502502`");
-
-                    } catch (SQLException e) {
-                        new TerminalComponent(getLogger(), new TextComponent()
-                                .combine(TextFormat.RED + "<DATABASE> Testing execution failed!")
-                                .add("" + e))
-                                .warn();
-                        return;
-                    }
-
-                    new TerminalComponent(getLogger(), new TextComponent()
-                            .combine(TextFormat.GREEN + "<DATABASE> Everything good!"))
-                            .info();
-
-                }).join();
-
-            }
-        });
-    }
 
     // Server enabled
     @Override
@@ -170,13 +139,56 @@ public class Core extends PluginBase {
         this.getServer().getPluginManager().registerEvents(new ChatEvent(this, chatManager), this);
         this.getLogger().info("Listeners are registered.");
 
-
+        // DEBUG
+        if (debug) {
+            this.getServer().getCommandMap().register("Core", new PlaySoundDebug(this));
+        }
     }
 
     // Server disabled.
     @Override
     public void onDisable() {
 
+    }
+
+
+
+
+
+    private void databaseCheck() {
+        this.getServer().getScheduler().scheduleAsyncTask(this, new AsyncTask() {
+            @Override
+            public void onRun() {
+
+                database.getConnection().thenAcceptAsync((connection) -> {
+                    ResultSet resultSet = null;
+                    new TerminalComponent(getLogger(), new TextComponent()
+                            .combine(TextFormat.BLUE + "<DATABASE> Testing database connection..."))
+                            .info();
+                    Statement statement = null;
+                    try {
+                        statement = connection.createStatement();
+                        statement.executeUpdate("CREATE TABLE if not exists `test502502` (`test1` INTEGER);");
+                        statement.executeUpdate("INSERT INTO `test502502`(`test1`) VALUES (69420);");
+                        resultSet = statement.executeQuery("SELECT * from `test502502`");
+                        statement.executeUpdate("DROP TABLE `test502502`");
+
+                    } catch (SQLException e) {
+                        new TerminalComponent(getLogger(), new TextComponent()
+                                .combine(TextFormat.RED + "<DATABASE> Testing execution failed!")
+                                .add("" + e))
+                                .warn();
+                        return;
+                    }
+
+                    new TerminalComponent(getLogger(), new TextComponent()
+                            .combine(TextFormat.GREEN + "<DATABASE> Everything good!"))
+                            .info();
+
+                }).join();
+
+            }
+        });
     }
 
 
