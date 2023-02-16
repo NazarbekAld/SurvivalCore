@@ -6,6 +6,7 @@ import lombok.Getter;
 import java.util.List;
 
 @Getter
+@SuppressWarnings({ "unused" })
 public class TerminalComponent extends TextComponent{
 
     final PluginLogger logger;

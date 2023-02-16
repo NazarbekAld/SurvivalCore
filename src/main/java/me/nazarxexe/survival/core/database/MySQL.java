@@ -35,7 +35,6 @@ public class MySQL implements IDatabase{
     @Override
     public @Nullable CompletableFuture<Connection> getConnection() {
         return CompletableFuture.supplyAsync(() -> {
-
             try {
 
                 if (connection != null && !(connection.isClosed())){
@@ -60,7 +59,6 @@ public class MySQL implements IDatabase{
                         .critical();
                 return null;
             }
-
         });
     }
 }

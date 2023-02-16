@@ -17,7 +17,6 @@ public class ChatEvent implements Listener {
 
     @EventHandler
     public void onChat(PlayerChatEvent e) {
-        e.setCancelled(true);
-        manager.getExecutable().chatEvent(new Message(e.getPlayer(), e.getMessage()));
+        manager.getExecutable().chatEvent(new Message(e.getPlayer(), e.getMessage()), e);
     }
 }

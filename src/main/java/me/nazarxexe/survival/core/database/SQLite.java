@@ -16,6 +16,7 @@ import java.sql.SQLException;
 import java.util.concurrent.CompletableFuture;
 
 @Getter
+@SuppressWarnings({ "unused" })
 public class SQLite implements IDatabase {
 
     private final File databaseFile;
@@ -28,7 +29,13 @@ public class SQLite implements IDatabase {
         this.databaseFile = databaseFile;
         if (!(databaseFile.exists())) {
             try {
-                databaseFile.createNewFile();
+                boolean success = databaseFile.createNewFile();
+                new TerminalComponent(core.getLogger(), new TextComponent()
+                        .combine(TextFormat.GREEN)
+                        .combine("Database file ")
+                        .combine(this.databaseFile.getName())
+                        .combine(" created.")
+                ).info();
             } catch (IOException e) {
                 new TerminalComponent(core.getLogger(),
                         new TextComponent()

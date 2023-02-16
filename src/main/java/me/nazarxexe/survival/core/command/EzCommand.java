@@ -1,7 +1,6 @@
 package me.nazarxexe.survival.core.command;
 
 import cn.nukkit.command.Command;
-import cn.nukkit.command.CommandMap;
 import cn.nukkit.command.CommandSender;
 import cn.nukkit.plugin.Plugin;
 import cn.nukkit.utils.TextFormat;
@@ -9,6 +8,7 @@ import io.netty.util.internal.EmptyArrays;
 import me.nazarxexe.survival.core.tools.DataObject;
 import me.nazarxexe.survival.core.tools.TextComponent;
 
+@SuppressWarnings({ "unused" })
 public class EzCommand {
 
     String name;
@@ -83,14 +83,11 @@ public class EzCommand {
         if (!(dO.getFields().get("executable") == null) && dO.getFields().get("executable") instanceof CommandExecutable){
             this.executable = (CommandExecutable) dO.getFields().get("executable");
         }else {
-            this.executable = new CommandExecutable() {
-                @Override
-                public boolean execute(CommandSender sender, String commandLabel, String[] args) {
-                    sender.sendMessage(new TextComponent()
-                            .combine(TextFormat.GREEN)
-                            .combine("This is default executable!").getText());
-                    return true;
-                }
+            this.executable = (sender, commandLabel, args) -> {
+                sender.sendMessage(new TextComponent()
+                        .combine(TextFormat.GREEN)
+                        .combine("This is default executable!").getText());
+                return true;
             };
         }
 

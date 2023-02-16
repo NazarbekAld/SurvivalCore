@@ -7,6 +7,7 @@ import me.nazarxexe.survival.core.tools.TextComponent;
 import org.jetbrains.annotations.NotNull;
 
 @Getter
+@SuppressWarnings({ "unused" })
 public class Message{
 
     TextComponent message;

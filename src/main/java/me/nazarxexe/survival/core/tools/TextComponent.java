@@ -4,6 +4,7 @@ import cn.nukkit.utils.TextFormat;
 import lombok.Data;
 
 @Data
+@SuppressWarnings({ "unused" })
 public class TextComponent{
 
     private String text;

@@ -1,16 +1,8 @@
 package me.nazarxexe.survival.core.chat;
 import cn.nukkit.Player;
-import cn.nukkit.plugin.PluginLogger;
-import cn.nukkit.scheduler.AsyncTask;
-import cn.nukkit.scheduler.TaskHandler;
-import cn.nukkit.utils.TextFormat;
 import me.nazarxexe.survival.core.Core;
-import me.nazarxexe.survival.core.tools.TerminalComponent;
-import me.nazarxexe.survival.core.tools.TextComponent;
 import org.jetbrains.annotations.NotNull;
 
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.List;
 
 
@@ -36,7 +28,7 @@ public class ChatManager {
      *
      * @param message {@link me.nazarxexe.survival.core.chat.Message} object.
      */
-
+    @SuppressWarnings("unused")
     public void send(@NotNull Message message){
 
         core.getServer().getOnlinePlayers().forEach(
@@ -55,6 +47,7 @@ public class ChatManager {
      * @param message {@link me.nazarxexe.survival.core.chat.Message} object.
      * @param players {@link java.util.List} list of players to send.
      */
+    @SuppressWarnings("unused")
     public void send(@NotNull List<Player> players, @NotNull Message message){ // Send to group of players
 
         players.forEach(
@@ -96,22 +89,6 @@ public class ChatManager {
 
 
     private void setDefaultExecutable() {
-        this.setChatExecutable(message -> {
-
-            if (message.getSender() == null){
-                send(message);
-                return;
-            }
-            TextComponent msg = new TextComponent()
-                    .combine(TextComponent.coloredText(TextFormat.GREEN, message.getSender().getName())
-                            .combine(" > ")
-                            .combine(message.getMessage().getText())
-                    );
-            message.setMessage(msg);
-            new TerminalComponent(core.getLogger(), msg)
-                    .info();
-
-            send(message);
-        });
+        this.setChatExecutable((message, event) -> {  });
     }
 }

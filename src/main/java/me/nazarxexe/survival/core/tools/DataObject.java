@@ -3,7 +3,6 @@ package me.nazarxexe.survival.core.tools;
 import lombok.Getter;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.util.HashMap;
 
 @Getter
@@ -22,10 +21,6 @@ public class DataObject {
     }
 
     private void setFields(HashMap<String, Object> map) {
-
-        if (object.getClass().getDeclaredFields().length == 0){
-            return;
-        }
 
         for (Field f : this.object.getClass().getDeclaredFields()){
             f.setAccessible(true);

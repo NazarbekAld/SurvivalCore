@@ -108,6 +108,7 @@ public class EconomyManager {
      * @see <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/CompletableFuture.html">CompletableFuture docs</a>
     *
      */
+    @SuppressWarnings("unused")
     public @Nullable CompletableFuture<Pocket> loadPocket(@NotNull String name, @NotNull UUID owner){
         return core.getDatabase().getConnection().thenApplyAsync(connection -> {
             PreparedStatement pre;
@@ -152,13 +153,7 @@ public class EconomyManager {
         return core.getServer().getScheduler().scheduleAsyncTask(core, new AsyncTask() {
             @Override
             public void onRun() {
-                core.getDatabase().getConnection().thenAcceptAsync((connection -> {
-
-                    transaction.getPockets().forEach((pocket) -> {
-                        savePocket(pocket);
-                    });
-
-                })).join();
+                core.getDatabase().getConnection().thenAcceptAsync((connection -> transaction.getPockets().forEach((pocket) -> savePocket(pocket)))).join();
             }
         });
     }
@@ -170,22 +165,12 @@ public class EconomyManager {
      * @param taskType {@link me.nazarxexe.survival.core.tools.tasktype.TaskType} enum.
      * @return {@link cn.nukkit.scheduler.TaskHandler}
      */
+    @SuppressWarnings("unused")
     public TaskHandler pushTransaction(@NotNull TaskType taskType, @NotNull Transaction transaction){
         if (taskType == TaskType.ASYNC)
             return pushTransaction(transaction);
         if (taskType == TaskType.SYNC)
-            return core.getServer().getScheduler().scheduleTask(core, new Runnable() {
-                @Override
-                public void run() {
-                    core.getDatabase().getConnection().thenAcceptAsync((connection -> {
-
-                        transaction.getPockets().forEach((pocket) -> {
-                            savePocket(pocket);
-                        });
-
-                    })).join();
-                }
-            });
+            return core.getServer().getScheduler().scheduleTask(core, () -> core.getDatabase().getConnection().thenAcceptAsync((connection -> transaction.getPockets().forEach(this::savePocket))).join());
         return pushTransaction(transaction);
     }
 
