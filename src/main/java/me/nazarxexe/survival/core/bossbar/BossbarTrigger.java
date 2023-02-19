@@ -1,5 +1,12 @@
 package me.nazarxexe.survival.core.bossbar;
 
+/**
+ *
+ * Bossbar triggers
+ *
+ * Executes code when reaches start.
+ *
+ */
 public abstract class BossbarTrigger {
 
     public BossbarTrigger(float triggerProgress) {
