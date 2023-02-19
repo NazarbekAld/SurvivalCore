@@ -41,6 +41,18 @@ public class TextComponent{
         return this;
     }
 
+
+    /**
+     *
+     * Set text without "escape sequences"
+     *
+     */
+    public TextComponent requireNoES() {
+        if (this.getText().contains("\n"))
+            this.setText(this.getText().replace("\n", " "));
+        return this;
+    }
+
     public static TextComponent coloredText(TextFormat color, String text){
         return
                 new TextComponent()

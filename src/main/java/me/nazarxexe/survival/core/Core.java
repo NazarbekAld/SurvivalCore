@@ -8,6 +8,7 @@ import cn.nukkit.utils.Config;
 import cn.nukkit.utils.ConfigSection;
 import cn.nukkit.utils.TextFormat;
 import lombok.Getter;
+import me.nazarxexe.survival.core.bossbar.debug.Debug;
 import me.nazarxexe.survival.core.chat.ChatEvent;
 import me.nazarxexe.survival.core.chat.ChatManager;
 import me.nazarxexe.survival.core.database.IDatabase;
@@ -166,6 +167,8 @@ public class Core extends PluginBase {
         this.getLogger().info("Registering listeners...");
         this.getServer().getPluginManager().registerEvents(new ChatEvent(this, chatManager), this);
         this.getLogger().info("Listeners are registered.");
+
+        getServer().getCommandMap().register("corede", new Debug(this));
 
     }
 
