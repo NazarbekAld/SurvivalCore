@@ -168,7 +168,6 @@ public class Core extends PluginBase {
         this.getServer().getPluginManager().registerEvents(new ChatEvent(this, chatManager), this);
         this.getLogger().info("Listeners are registered.");
 
-        getServer().getCommandMap().register("corede", new Debug(this));
 
     }
 
