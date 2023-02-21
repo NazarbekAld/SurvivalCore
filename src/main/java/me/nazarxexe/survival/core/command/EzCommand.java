@@ -6,7 +6,7 @@ import cn.nukkit.plugin.Plugin;
 import cn.nukkit.utils.TextFormat;
 import io.netty.util.internal.EmptyArrays;
 import me.nazarxexe.survival.core.tools.DataObject;
-import me.nazarxexe.survival.core.tools.TextComponent;
+import me.nazarxexe.survival.core.tools.text.TextComponent;
 
 @SuppressWarnings({ "unused" })
 public class EzCommand {

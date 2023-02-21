@@ -3,7 +3,7 @@ package me.nazarxexe.survival.core.database;
 import cn.nukkit.utils.TextFormat;
 import me.nazarxexe.survival.core.Core;
 import me.nazarxexe.survival.core.tools.TerminalComponent;
-import me.nazarxexe.survival.core.tools.TextComponent;
+import me.nazarxexe.survival.core.tools.text.TextComponent;
 import org.jetbrains.annotations.Nullable;
 
 import java.sql.Connection;

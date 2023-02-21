@@ -2,12 +2,13 @@ package me.nazarxexe.survival.core.tools;
 
 import cn.nukkit.plugin.PluginLogger;
 import lombok.Getter;
+import me.nazarxexe.survival.core.tools.text.TextComponent;
 
 import java.util.List;
 
 @Getter
 @SuppressWarnings({ "unused" })
-public class TerminalComponent extends TextComponent{
+public class TerminalComponent extends TextComponent {
 
     final PluginLogger logger;
 

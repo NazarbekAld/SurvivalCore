@@ -8,7 +8,6 @@ import cn.nukkit.utils.Config;
 import cn.nukkit.utils.ConfigSection;
 import cn.nukkit.utils.TextFormat;
 import lombok.Getter;
-import me.nazarxexe.survival.core.bossbar.debug.Debug;
 import me.nazarxexe.survival.core.chat.ChatEvent;
 import me.nazarxexe.survival.core.chat.ChatManager;
 import me.nazarxexe.survival.core.database.IDatabase;
@@ -16,7 +15,7 @@ import me.nazarxexe.survival.core.database.MySQL;
 import me.nazarxexe.survival.core.database.SQLite;
 import me.nazarxexe.survival.core.economy.EconomyManager;
 import me.nazarxexe.survival.core.tools.TerminalComponent;
-import me.nazarxexe.survival.core.tools.TextComponent;
+import me.nazarxexe.survival.core.tools.text.TextComponent;
 
 import java.io.File;
 import java.sql.ResultSet;
@@ -36,14 +35,7 @@ public class Core extends PluginBase {
     private Config config;
 
 
-
-    // INIT plugin
-    @Override
-    public void onLoad() {
-
-    }
-
-    private String parse(Object object){
+    public String parse(Object object){
         return String.valueOf(object);
     }
 
@@ -167,7 +159,6 @@ public class Core extends PluginBase {
         this.getLogger().info("Registering listeners...");
         this.getServer().getPluginManager().registerEvents(new ChatEvent(this, chatManager), this);
         this.getLogger().info("Listeners are registered.");
-
 
     }
 

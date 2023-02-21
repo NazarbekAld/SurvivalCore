@@ -3,7 +3,7 @@ package me.nazarxexe.survival.core.chat;
 
 import cn.nukkit.Player;
 import lombok.Getter;
-import me.nazarxexe.survival.core.tools.TextComponent;
+import me.nazarxexe.survival.core.tools.text.TextComponent;
 import org.jetbrains.annotations.NotNull;
 
 @Getter

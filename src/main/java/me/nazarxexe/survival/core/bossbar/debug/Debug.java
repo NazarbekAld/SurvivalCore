@@ -7,7 +7,7 @@ import me.nazarxexe.survival.core.Core;
 import me.nazarxexe.survival.core.bossbar.BossbarTrigger;
 import me.nazarxexe.survival.core.bossbar.DynamicBossbar;
 import me.nazarxexe.survival.core.bossbar.StaticBossbar;
-import me.nazarxexe.survival.core.tools.TextComponent;
+import me.nazarxexe.survival.core.tools.text.TextComponent;
 
 public class Debug extends Command
 {

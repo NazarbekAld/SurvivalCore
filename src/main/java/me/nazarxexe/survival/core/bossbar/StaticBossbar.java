@@ -5,7 +5,7 @@ import cn.nukkit.plugin.Plugin;
 import cn.nukkit.utils.BossBarColor;
 import cn.nukkit.utils.DummyBossBar;
 import lombok.Getter;
-import me.nazarxexe.survival.core.tools.TextComponent;
+import me.nazarxexe.survival.core.tools.text.TextComponent;
 
 import java.util.*;
 
@@ -48,6 +48,7 @@ public class StaticBossbar {
     {
         this.plugin = plugin;
         this.textComponent = text;
+        this.textComponent.add_RULE_NoES();
         bossbarDummy = new HashMap<>();
 
     }
@@ -56,6 +57,7 @@ public class StaticBossbar {
     {
         this.plugin = plugin;
         this.textComponent = text;
+        this.textComponent.add_RULE_NoES();
         this.color = color;
         bossbarDummy = new HashMap<>();
 
@@ -65,6 +67,7 @@ public class StaticBossbar {
     {
         this.plugin = plugin;
         this.textComponent = text;
+        this.textComponent.add_RULE_NoES();
         this.color = color;
         bossbarDummy = new HashMap<>();
 
@@ -86,7 +89,7 @@ public class StaticBossbar {
         DummyBossBar b = new DummyBossBar.Builder(player)
                 .length(100f)
                 .color(color)
-                .text(textComponent.requireNoES().getText())
+                .text(textComponent.getText())
                 .build();
 
         bossbarDummy.put(player, b);
@@ -99,7 +102,7 @@ public class StaticBossbar {
         bossbarDummy.forEach(((player, dummyBossBar) -> {
 
             dummyBossBar.setLength(progress);
-            dummyBossBar.setText(textComponent.requireNoES().getText());
+            dummyBossBar.setText(textComponent.getText());
             dummyBossBar.setColor(color);
             dummyBossBar.reshow();
 

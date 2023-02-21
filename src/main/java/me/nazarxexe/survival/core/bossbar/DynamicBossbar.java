@@ -4,7 +4,7 @@ import cn.nukkit.plugin.Plugin;
 import cn.nukkit.scheduler.Task;
 import cn.nukkit.utils.BossBarColor;
 import lombok.Getter;
-import me.nazarxexe.survival.core.tools.TextComponent;
+import me.nazarxexe.survival.core.tools.text.TextComponent;
 
 import java.util.*;
 
