@@ -11,7 +11,7 @@
   <h3 align="center">SurvivalCore</h3>
 
   <p align="center">
-    Best API for your development!
+    Best LIB for your development!
     <br />
     <a href="https://github.com/NazarbekAld/SurvivalCore/issues">Report Bug</a>
     ·
